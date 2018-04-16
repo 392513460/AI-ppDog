@@ -350,7 +350,7 @@ MonoBehaviour:
   - "\u5173\u673A"
   - "\u4E70"
   - "\u770B\u5BB6"
-  - "\u51FA\u95E8"
+  - "\u51FA"
   - "\u770B\u4E0B\u5BB6"
   - "\u73A9"
   - "\u597D\u5427"
@@ -358,6 +358,24 @@ MonoBehaviour:
   - "\u4F11\u606F"
   - "\u4F60\u771F"
   - "\u8868\u6F14"
+  - "\u5FEB\u9012"
+  - "\u8D2D\u4E70"
+  - "\u5546\u57CE"
+  - "\u8D2D\u7269"
+  - "\u91C7\u8D2D"
+  - shop
+  - "\u79BB\u5F00"
+  - "\u6E38\u620F"
+  - "\u8DD1\u817F"
+  - "\u90AE"
+  - "\u5305\u88F9"
+  - "\u4FE1\u4EF6"
+  - "\u8D2D"
+  - "\u53EF\u7231"
+  - "\u806A\u660E"
+  - "\u673A\u667A"
+  - "\u559C\u6B22"
+  - "\u7231"
   petMessage: {fileID: 1823736957161808}
 --- !u!114 &114839983483748556
 MonoBehaviour:

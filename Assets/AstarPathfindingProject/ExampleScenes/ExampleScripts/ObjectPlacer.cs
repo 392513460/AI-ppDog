@@ -32,9 +32,9 @@ namespace Pathfinding.Examples {
 
 		public void PlaceObject (GameObject go) {
             //室内敌人只允许生成一个
-            if(go.tag==Tags.enemy)
+            if(go.tag==Tags.enemy )
             {
-                if (GameObject.FindGameObjectWithTag(Tags.enemy) != null)
+                if (GameObject.FindGameObjectWithTag(Tags.enemy) != null || AnimationExcuting.instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Walk") == false)
                 {
                     return;
                 }
@@ -55,7 +55,7 @@ namespace Pathfinding.Examples {
 				GameObject obj = GameObject.Instantiate(go, p, Quaternion.identity) as GameObject;
 				if (issueGUOs) {
                     //只有是障碍物才会更新
-                    if (obj.tag == Tags.wall)
+                    if (obj.tag == Tags.ground)
                     {
                         Bounds b = obj.GetComponent<Collider>().bounds;
                         GraphUpdateObject guo = new GraphUpdateObject(b);
@@ -76,7 +76,7 @@ namespace Pathfinding.Examples {
 			// Check what object is under the mouse cursor
 			if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
 				// Ignore ground and triggers
-				if (hit.collider.isTrigger || hit.transform.gameObject.name == "Room"||hit.collider.tag=="Untagged") return;
+				if (hit.collider.isTrigger || hit.transform.gameObject.name == "Room"||hit.collider.tag=="Untagged"||hit.collider.tag==Tags.wall) return;
 
 				Bounds b = hit.collider.bounds;
 				Destroy(hit.collider);

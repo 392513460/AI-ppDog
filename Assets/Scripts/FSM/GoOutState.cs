@@ -31,8 +31,9 @@ public class GoOutState : FSMState
                 break;
             case "巡逻":
             case "看家":
-            case "出门":
+            case "出":
             case "看下家":
+            case "离开":
                 IdleState idle = new IdleState(fsm);
                 idle.isCanPatrol = true;
                 fsm.PerformTransition(Transition.Back);

@@ -43,6 +43,15 @@ public class MasterDialogueItem : MonoBehaviour {
     {
         switch(currentMessage)
         {
+            case "聪明":
+            case "机智":
+            case "喜欢":
+            case "爱":
+                StartCoroutine(Gradte());
+                break;
+            case "跑腿":
+                StartCoroutine(ShopOrSend());
+                break;
             case "启动":
             case "你好":
             case "小狗同学":   
@@ -52,12 +61,22 @@ public class MasterDialogueItem : MonoBehaviour {
             case "看家":
             case "出门":
             case "看下家":
+            case "离开一小会":
                 StartCoroutine(Trail());
                 break;
             case "超市":
             case "买":
+            case "商城":
+            case "购":
+            case "shop":
                 StartCoroutine(Shopping());
                 Debug.Log("超市");
+                break;
+            case "快递":
+            case "邮":
+            case "包裹":
+            case "信件":
+                StartCoroutine(Send());
                 break;
             case "再见":
             case "关闭":
@@ -83,6 +102,16 @@ public class MasterDialogueItem : MonoBehaviour {
             default:StartCoroutine(DefaultAnswer());
                 break;             
         }
+    }
+    IEnumerator Gradte()
+    {
+        yield return new WaitForSeconds(1.0f);
+        InstantiatePetMessage("谢谢夸奖！嘿嘿");
+    }
+    IEnumerator ShopOrSend()
+    {
+        yield return new WaitForSeconds(1.0f);
+        InstantiatePetMessage("是想购物还是拿快递？");
     }
     IEnumerator StopPlay()
     {
@@ -118,8 +147,13 @@ public class MasterDialogueItem : MonoBehaviour {
     }
     IEnumerator Trail()
     {
+        if (GameObject.Find("UICanvas").transform.Find("ShoppingMall").gameObject.activeInHierarchy == true)
+        {
+            GameObject.Find("UICanvas").transform.Find("ShoppingMall").gameObject.SetActive(false);
+        }
         yield return new WaitForSeconds(1.0f);
         //TODO 巡逻
+      
         if (AnimationExcuting.instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Sleep"))
         {
             InstantiatePetMessage("ZZZZZZZ");
@@ -139,6 +173,21 @@ public class MasterDialogueItem : MonoBehaviour {
             InstantiatePetMessage("好的你想购买点什么呢?");
             yield return new WaitForSeconds(1.0f);
             TransformState.instance.ShoppingState();
+            //TODO 购物
+        }
+       
+    }
+    IEnumerator Send()
+    {
+        yield return new WaitForSeconds(1.0f);
+        if (AnimationExcuting.instance.anim.GetCurrentAnimatorStateInfo(0).IsName("Sleep"))
+        {
+            InstantiatePetMessage("ZZZZZZZ");
+        }
+        else {
+            InstantiatePetMessage("确认您的订单号");
+            yield return new WaitForSeconds(1.0f);
+            GameObject.Find("UICanvas").transform.Find("Send").gameObject.SetActive(true);
             //TODO 购物
         }
     }

@@ -62,6 +62,9 @@ public class PatrolState:FSMState {
                ComebackInitalPosition();
                 break;
             case "超市":
+            case "商城":
+            case "购":
+            case "shop":
                 ComebackInitalPosition(3);
                 break;
 

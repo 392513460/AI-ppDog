@@ -47,7 +47,6 @@ public class PasserbyMove : MonoBehaviour {
         {
             i++;
             i %= allPositions.Count;
-            Debug.Log(i);
         }
     
       

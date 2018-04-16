@@ -49,13 +49,15 @@ public class IdleState:FSMState {
                 break;
             case "巡逻":
             case "看家":
-            case "出门":
+            case "出":
             case "看下家":
+            case "离开":
                 EnviromentManager.instance.ChangeDepthField(false);
                 fsm.PerformTransition(Transition.SeePlayer);
                 break;
             case "玩":
             case "表演":
+            case "游戏":
                 fsm.PerformTransition(Transition.StartPlay);
                 break;          
         }

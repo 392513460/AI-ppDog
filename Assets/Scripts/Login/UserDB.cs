@@ -7,6 +7,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 
 public class UserDB : MonoBehaviour {
+    public static UserDB instance;
     public InputField userName;
     public InputField userPassword;
     public InputField ConfirmPassword;
@@ -18,6 +19,10 @@ public class UserDB : MonoBehaviour {
     private string currentName;
     private string currentPassword;
     public List<UserData> users = new List<UserData>();
+    void Awake()
+    {
+        instance = this;
+    }
 	public void RegisterUser()
     {
         SetUsers();
@@ -79,7 +84,7 @@ public class UserDB : MonoBehaviour {
                 currentName = name;
                 currentPassword = password;
                 sentinel++;
-                this.gameObject.SetActive(false);
+                GameObject.Find("UICanvas").transform.Find("LoginPanel").gameObject.SetActive(false);
                 GameObject.Find("UICanvas").transform.Find("message_button").gameObject.SetActive(true);
             }
         }
@@ -170,6 +175,7 @@ public class UserDB : MonoBehaviour {
     }
     IEnumerator ShowMessage(string str)
     {
+        message = GameObject.Find("UICanvas").transform.Find("Mesaage_Bg").gameObject;
         message.SetActive(true);
         message.transform.GetChild(0).gameObject.GetComponent<Text>().text = str;
         yield return new WaitForSeconds(2.0f);
