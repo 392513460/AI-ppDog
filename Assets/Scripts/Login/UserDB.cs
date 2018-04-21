@@ -18,10 +18,22 @@ public class UserDB : MonoBehaviour {
     //用户现在登录的账号和密码
     private string currentName;
     private string currentPassword;
+    public Text hidePassword;
     public List<UserData> users = new List<UserData>();
+    public GameObject message_button;
     void Awake()
     {
         instance = this;
+        if(!Directory.Exists(Application.dataPath + "/Text"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Text");
+        }
+    }
+    void Start()
+    {
+        GameObject.Find("UICanvas").transform.Find("LoginPanel/login_button").GetComponent<Button>().onClick.AddListener(LoginUser);
+        GameObject.Find("UICanvas").transform.Find("RegistPanel/regist_button").GetComponent<Button>().onClick.AddListener(RegisterUser);
+        message_button.SetActive(false);
     }
 	public void RegisterUser()
     {
@@ -38,7 +50,7 @@ public class UserDB : MonoBehaviour {
             string name = temp.userName;
             if(name==userName.text.Trim())
             {
-                StartCoroutine(ShowMessage("账号密码"));
+                StartCoroutine(ShowMessage("账号已存在"));
                 return;
             }
         }
@@ -86,6 +98,7 @@ public class UserDB : MonoBehaviour {
                 sentinel++;
                 GameObject.Find("UICanvas").transform.Find("LoginPanel").gameObject.SetActive(false);
                 GameObject.Find("UICanvas").transform.Find("message_button").gameObject.SetActive(true);
+                message_button.SetActive(true);
             }
         }
         if(sentinel==0)
@@ -129,8 +142,7 @@ public class UserDB : MonoBehaviour {
         }
         else
         {
-   
-            StartCoroutine(ShowMessage("没有数据"));
+            File.Create(Application.dataPath + "/Text" + "/user.json");
         }
     }
     public static bool IsCN(string strIn)
@@ -180,5 +192,12 @@ public class UserDB : MonoBehaviour {
         message.transform.GetChild(0).gameObject.GetComponent<Text>().text = str;
         yield return new WaitForSeconds(2.0f);
         message.SetActive(false);
+    }
+    //隐藏密码
+    public void HidePassword(string a)
+    { 
+        if (Input.GetKeyDown(KeyCode.Backspace)) { hidePassword.text="";Password.text = ""; return; }
+        hidePassword.text += "*";
+        
     }
 }

@@ -65,6 +65,10 @@ public class PatrolState:FSMState {
             case "商城":
             case "购":
             case "shop":
+            case "快递":
+            case "邮":
+            case "包裹":
+            case "信件":
                 ComebackInitalPosition(3);
                 break;
 
