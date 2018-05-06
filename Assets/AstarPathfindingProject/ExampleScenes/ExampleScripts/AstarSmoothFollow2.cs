@@ -23,12 +23,14 @@ namespace Pathfinding.Examples
         void LateUpdate() 
         {
             Vector3 wantedPosition = Vector3.zero;
+            //是否允许射线检测，只有第三人称视角才允许射线检测
             if (!isbanLineCast)
             {
                 LineCast();
             }
             if (staticOffset)
-            {
+            { 
+                //利用向量相加，方便在Inspector面板配置参数
                 wantedPosition = target.position + new Vector3(horzintal, height, distance);
             }
             else {
@@ -41,6 +43,7 @@ namespace Pathfinding.Examples
 
             if (smoothRotation&&isFirstView==false)
             {
+                //望向target
                 Quaternion wantedRotation = Quaternion.LookRotation(target.position - transform.position, target.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, wantedRotation, Time.deltaTime * rotationDamping);
             }
@@ -63,17 +66,14 @@ namespace Pathfinding.Examples
             Debug.DrawLine(target.position, aim, Color.red);
             //主角朝着这个方向发射射线
             RaycastHit hit;
-
+            //发射射线
             if (Physics.Linecast(target.position, aim, out hit))
             {
                 string name = hit.collider.gameObject.tag;
-
-
-
                 if (name == Tags.wall)
-                {
+                {    //判断目标角色与检测物体角度z轴与X轴的对比
                     if (Vector3.Angle(new Vector3(0, 0, target.position.z), new Vector3(0, 0, hit.transform.position.z)) > Vector3.Angle(new Vector3(0, 0, target.position.x), new Vector3(0, 0, hit.transform.position.x)))
-                    {
+                    {   //如果遮挡物的Z轴小于目标z轴,z轴增加
                         if (target.position.z >= hit.transform.position.z)
                         {
 
@@ -87,7 +87,7 @@ namespace Pathfinding.Examples
                         }
                     }
                     else {
-
+                        //同z轴变换原理相似
                         if (target.position.x >= hit.transform.position.x)
                         {
 
@@ -109,7 +109,7 @@ namespace Pathfinding.Examples
         {
             TransformState.instance.PlayButtonClip();
             isbanLineCast = false;
-           height = 40.0f;
+            height = 40.0f;
             dogRender.enabled = true;
             isFirstView = false;
         }
@@ -132,23 +132,25 @@ namespace Pathfinding.Examples
         }
         //平滑跟随目标
         protected void CameraSmoothFollow()
-        {
+        {   //获得目标y轴旋转度数
             float wantedRotationAngle = target.eulerAngles.y;
             float wantedHeight = target.position.y +height;
 
             float currentRotationAngle = transform.eulerAngles.y;
             float currentHeight = transform.position.y;
-
+            //差值将相机的角度与target一直在y轴
             currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationDamping* Time.deltaTime);
             currentHeight = Mathf.Lerp(currentHeight, wantedHeight, rotationDamping * Time.deltaTime);
-
+            //将角度转转为四元数
             Quaternion currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
 
             Vector3 newPos = target.position;
+
+            //将目标位置进行再z轴的旋转
             newPos -= currentRotation * Vector3.forward *5;
             newPos = new Vector3(newPos.x, currentHeight, newPos.z);
           
-            
+            //进行位置信息赋值并望向目标
             transform.position = newPos;
             transform.LookAt(target);
 
