@@ -75,7 +75,11 @@ public class UserDB : MonoBehaviour {
         }
        
        List<UserData> user_s = CreatUserData();
+
         string filePath = Application.dataPath  +"/Text"+"/user.json";
+
+      
+
         string saveJsonStr = JsonMapper.ToJson(user_s);
         StreamWriter sw = new StreamWriter(filePath);
         sw.Write(saveJsonStr);
